@@ -1,0 +1,1539 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我爱宋寅潇</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义主题 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        love: {
+                            primary: '#FF4B91', // 浪漫粉色
+                            secondary: '#FFB6C1', // 浅粉色
+                            accent: '#FF85A1', // 中粉色
+                            dark: '#8B0000', // 深红色
+                            light: '#FFF0F5' // 极浅粉色
+                        }
+                    },
+                    fontFamily: {
+                        romantic: ['Dancing Script', 'cursive', 'system-ui'],
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 引入Google字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .heart-beat {
+                animation: heartbeat 1.5s ease-in-out infinite both;
+            }
+            .fade-in {
+                animation: fadeIn 0.8s ease-in forwards;
+            }
+            .slide-up {
+                animation: slideUp 0.8s ease-out forwards;
+            }
+            .edit-mode {
+                border: 2px dashed #FF4B91 !important;
+            }
+        }
+        
+        @keyframes heartbeat {
+            from { transform: scale(1); }
+            14% { transform: scale(1.1); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-love-light text-gray-800 min-h-screen">
+    <!-- 编辑工具栏 -->
+    <div class="bg-love-dark text-white py-2 px-4 fixed top-0 right-0 z-50 rounded-bl-lg shadow-lg">
+        <button id="edit-toggle" class="flex items-center text-sm hover:text-love-secondary transition-colors">
+            <i class="fa fa-pencil mr-2"></i>
+            <span>编辑模式</span>
+        </button>
+        <div id="edit-controls" class="hidden mt-2 text-sm">
+            <button id="save-edits" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded mr-2">
+                <i class="fa fa-save mr-1"></i>保存
+            </button>
+            <button id="cancel-edits" class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded">
+                <i class="fa fa-times mr-1"></i>取消
+            </button>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <nav class="bg-white/80 backdrop-blur-md shadow-sm fixed w-full z-40 transition-all duration-300 mt-8">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fa fa-heart text-love-primary heart-beat text-xl"></i>
+                <span class="font-romantic text-2xl text-love-primary font-bold editable" data-type="text" data-id="site-title">我爱宋寅潇</span>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#home" class="hover:text-love-primary transition-colors">首页</a>
+                <a href="#memories" class="hover:text-love-primary transition-colors">美好回忆</a>
+                <a href="#gallery" class="hover:text-love-primary transition-colors">照片集</a>
+                <a href="#message" class="hover:text-love-primary transition-colors">留言板</a>
+            </div>
+            <button class="md:hidden text-gray-700" id="menu-toggle">
+                <i class="fa fa-bars text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white border-t animate-fade-in">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#home" class="py-2 hover:text-love-primary transition-colors">首页</a>
+                <a href="#memories" class="py-2 hover:text-love-primary transition-colors">美好回忆</a>
+                <a href="#gallery" class="py-2 hover:text-love-primary transition-colors">照片集</a>
+                <a href="#message" class="py-2 hover:text-love-primary transition-colors">留言板</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- 英雄区域 -->
+        <section id="home" class="pt-40 pb-20 md:pt-48 md:pb-28 relative overflow-hidden">
+            <!-- 背景装饰 -->
+            <div class="absolute inset-0 overflow-hidden opacity-10">
+                <i class="fa fa-heart absolute text-love-primary" style="top: 10%; left: 5%; font-size: 5rem;"></i>
+                <i class="fa fa-heart absolute text-love-primary" style="top: 20%; right: 10%; font-size: 3rem;"></i>
+                <i class="fa fa-heart absolute text-love-primary" style="bottom: 30%; left: 15%; font-size: 4rem;"></i>
+                <i class="fa fa-heart absolute text-love-primary" style="bottom: 20%; right: 20%; font-size: 6rem;"></i>
+            </div>
+            
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h1 class="font-romantic text-[clamp(2.5rem,8vw,5rem)] text-love-primary mb-6 slide-up opacity-0 editable" data-type="text" data-id="main-title" style="animation-delay: 0.2s;">
+                        我爱宋寅潇
+                    </h1>
+                    <p class="text-xl md:text-2xl mb-10 text-gray-700 slide-up opacity-0 editable" data-type="text" data-id="subtitle" style="animation-delay: 0.5s;">
+                        每一个平凡的日子，因为有你而变得特别
+                    </p>
+                    <div class="flex justify-center space-x-4 slide-up opacity-0" style="animation-delay: 0.8s;">
+                        <a href="#gallery" class="bg-love-primary hover:bg-love-primary/90 text-white px-6 py-3 rounded-full transition-all shadow-lg hover:shadow-xl">
+                            查看我们的照片
+                        </a>
+                        <a href="#message" class="bg-white hover:bg-gray-50 text-love-primary border border-love-primary px-6 py-3 rounded-full transition-all shadow-md hover:shadow-lg">
+                            写下想对你说的话
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 日期计时器 -->
+                <div class="mt-16 max-w-2xl mx-auto bg-white/70 backdrop-blur-sm rounded-xl p-6 shadow-md slide-up opacity-0 editable-section" data-id="timer-section" style="animation-delay: 1.1s;">
+                    <h3 class="text-center font-romantic text-2xl text-love-primary mb-4 editable" data-type="text" data-id="timer-title">我们在一起的日子</h3>
+                    <div class="grid grid-cols-4 gap-2 text-center">
+                        <div class="bg-white rounded-lg p-3 shadow-sm">
+                            <div id="days" class="text-2xl md:text-3xl font-bold text-love-primary">86</div>
+                            <div class="text-sm text-gray-600">天</div>
+                        </div>
+                        <div class="bg-white rounded-lg p-3 shadow-sm">
+                            <div id="hours" class="text-2xl md:text-3xl font-bold text-love-primary">0</div>
+                            <div class="text-sm text-gray-600">时</div>
+                        </div>
+                        <div class="bg-white rounded-lg p-3 shadow-sm">
+                            <div id="minutes" class="text-2xl md:text-3xl font-bold text-love-primary">0</div>
+                            <div class="text-sm text-gray-600">分</div>
+                        </div>
+                        <div class="bg-white rounded-lg p-3 shadow-sm">
+                            <div id="seconds" class="text-2xl md:text-3xl font-bold text-love-primary">0</div>
+                            <div class="text-sm text-gray-600">秒</div>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <button id="edit-anniversary" class="text-sm text-love-primary hover:underline hidden edit-button">
+                            <i class="fa fa-calendar mr-1"></i>修改纪念日
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 美好回忆区域 -->
+        <section id="memories" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16 editable-section" data-id="memories-header">
+                    <h2 class="font-romantic text-[clamp(2rem,5vw,3.5rem)] text-love-primary mb-4 editable" data-type="text" data-id="memories-title">我们的美好回忆</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto editable" data-type="text" data-id="memories-subtitle">记录我们一起走过的点点滴滴，每一个瞬间都值得珍藏</p>
+                </div>
+                
+                <div id="memories-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- 回忆1 -->
+                    <div class="bg-love-light rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1 memory-card" data-id="memory-1">
+                        <div class="h-56 overflow-hidden">
+                            <img src="https://picsum.photos/id/1068/600/400" alt="第一次约会" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110 memory-image">
+                            <button class="absolute top-2 right-2 bg-black/50 text-white p-1 rounded opacity-0 hover:opacity-100 transition-opacity edit-image hidden edit-button">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-romantic text-2xl text-love-primary mb-2 editable" data-type="text" data-id="memory-1-title">第一次约会</h3>
+                            <p class="text-gray-600 mb-3 editable" data-type="text" data-id="memory-1-desc">那一天，阳光正好，你的笑容比阳光更灿烂，我知道，我已经深深被你吸引。</p>
+                            <div class="text-sm text-gray-500 editable" data-type="date" data-id="memory-1-date">
+                                <i class="fa fa-calendar-o mr-1"></i> 2023年3月14日
+                            </div>
+                            <button class="mt-2 text-sm text-red-500 hover:text-red-700 hidden edit-button delete-memory">
+                                <i class="fa fa-trash mr-1"></i>删除
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 回忆2 -->
+                    <div class="bg-love-light rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1 memory-card" data-id="memory-2">
+                        <div class="h-56 overflow-hidden">
+                            <img src="https://picsum.photos/id/1039/600/400" alt="一起旅行" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110 memory-image">
+                            <button class="absolute top-2 right-2 bg-black/50 text-white p-1 rounded opacity-0 hover:opacity-100 transition-opacity edit-image hidden edit-button">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-romantic text-2xl text-love-primary mb-2 editable" data-type="text" data-id="memory-2-title">第一次旅行</h3>
+                            <p class="text-gray-600 mb-3 editable" data-type="text" data-id="memory-2-desc">在陌生的城市里，有你的陪伴，一切都变得那么美好，那些风景因为有你而更加动人。</p>
+                            <div class="text-sm text-gray-500 editable" data-type="date" data-id="memory-2-date">
+                                <i class="fa fa-calendar-o mr-1"></i> 2023年7月20日
+                            </div>
+                            <button class="mt-2 text-sm text-red-500 hover:text-red-700 hidden edit-button delete-memory">
+                                <i class="fa fa-trash mr-1"></i>删除
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 回忆3 -->
+                    <div class="bg-love-light rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1 memory-card" data-id="memory-3">
+                        <div class="h-56 overflow-hidden">
+                            <img src="https://picsum.photos/id/292/600/400" alt="生日惊喜" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110 memory-image">
+                            <button class="absolute top-2 right-2 bg-black/50 text-white p-1 rounded opacity-0 hover:opacity-100 transition-opacity edit-image hidden edit-button">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-romantic text-2xl text-love-primary mb-2 editable" data-type="text" data-id="memory-3-title">你的生日</h3>
+                            <p class="text-gray-600 mb-3 editable" data-type="text" data-id="memory-3-desc">为你准备的生日惊喜，看到你开心的笑容，是我最幸福的时刻，愿你每天都如此快乐。</p>
+                            <div class="text-sm text-gray-500 editable" data-type="date" data-id="memory-3-date">
+                                <i class="fa fa-calendar-o mr-1"></i> 2023年10月5日
+                            </div>
+                            <button class="mt-2 text-sm text-red-500 hover:text-red-700 hidden edit-button delete-memory">
+                                <i class="fa fa-trash mr-1"></i>删除
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <button id="add-memory" class="inline-flex items-center bg-love-secondary hover:bg-love-secondary/90 text-love-dark px-6 py-3 rounded-full transition-all">
+                        <i class="fa fa-plus-circle mr-2"></i> 添加新回忆
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 照片集区域 -->
+        <section id="gallery" class="py-20 bg-love-light">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16 editable-section" data-id="gallery-header">
+                    <h2 class="font-romantic text-[clamp(2rem,5vw,3.5rem)] text-love-primary mb-4 editable" data-type="text" data-id="gallery-title">我们的照片集</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto editable" data-type="text" data-id="gallery-subtitle">每一张照片都定格了我们的幸福瞬间，记录着我们的爱情故事</p>
+                </div>
+                
+                <!-- 图片上传区域 -->
+                <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6 mb-12">
+                    <h3 class="text-xl text-center text-love-primary mb-4 editable" data-type="text" data-id="upload-title">上传新照片</h3>
+                    <div class="flex flex-col items-center">
+                        <label for="image-upload" class="w-full border-2 border-dashed border-love-secondary rounded-lg p-8 text-center cursor-pointer hover:bg-love-light transition-colors">
+                            <i class="fa fa-cloud-upload text-4xl text-love-primary mb-3"></i>
+                            <p class="text-gray-600 editable" data-type="text" data-id="upload-text">点击或拖拽图片到这里上传</p>
+                            <p class="text-sm text-gray-500 mt-2 editable" data-type="text" data-id="upload-format">支持 JPG, PNG 格式，最大 5MB</p>
+                            <input id="image-upload" type="file" accept="image/*" multiple="" class="hidden">
+                        </label>
+                        <div class="mt-4 w-full">
+                            <button id="upload-btn" class="w-full bg-love-primary hover:bg-love-primary/90 text-white py-3 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled="">
+                                上传照片
+                            </button>
+                        </div>
+                    </div>
+                    <!-- 上传进度 -->
+                    <div id="upload-progress" class="mt-4 hidden">
+                        <div class="text-sm text-gray-600 mb-1">上传中...</div>
+                        <div class="w-full bg-gray-200 rounded-full h-2.5">
+                            <div id="progress-bar" class="bg-love-primary h-2.5 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 照片展示区 -->
+                <div id="photo-gallery" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <!-- 示例照片 -->
+                    <div class="relative group overflow-hidden rounded-lg shadow-md aspect-square gallery-photo" data-id="photo-1">
+                        <img src="https://picsum.photos/id/1027/400/400" alt="与宋寅潇的合影" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <button class="edit-photo-btn text-white p-2 hover:text-love-primary transition-colors mr-4 hidden edit-button">
+                                <i class="fa fa-pencil text-xl"></i>
+                            </button>
+                            <button class="delete-photo text-white p-2 hover:text-love-primary transition-colors">
+                                <i class="fa fa-trash text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-lg shadow-md aspect-square gallery-photo" data-id="photo-2">
+                        <img src="https://picsum.photos/id/1062/400/400" alt="宋寅潇的照片" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <button class="edit-photo-btn text-white p-2 hover:text-love-primary transition-colors mr-4 hidden edit-button">
+                                <i class="fa fa-pencil text-xl"></i>
+                            </button>
+                            <button class="delete-photo text-white p-2 hover:text-love-primary transition-colors">
+                                <i class="fa fa-trash text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-lg shadow-md aspect-square gallery-photo" data-id="photo-3">
+                        <img src="https://picsum.photos/id/338/400/400" alt="一起游玩的照片" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <button class="edit-photo-btn text-white p-2 hover:text-love-primary transition-colors mr-4 hidden edit-button">
+                                <i class="fa fa-pencil text-xl"></i>
+                            </button>
+                            <button class="delete-photo text-white p-2 hover:text-love-primary transition-colors">
+                                <i class="fa fa-trash text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="relative group overflow-hidden rounded-lg shadow-md aspect-square gallery-photo" data-id="photo-4">
+                        <img src="https://picsum.photos/id/177/400/400" alt="美丽的风景照" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <button class="edit-photo-btn text-white p-2 hover:text-love-primary transition-colors mr-4 hidden edit-button">
+                                <i class="fa fa-pencil text-xl"></i>
+                            </button>
+                            <button class="delete-photo text-white p-2 hover:text-love-primary transition-colors">
+                                <i class="fa fa-trash text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 留言板区域 -->
+        <section id="message" class="py-20 bg-white">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16 editable-section" data-id="message-header">
+                    <h2 class="font-romantic text-[clamp(2rem,5vw,3.5rem)] text-love-primary mb-4 editable" data-type="text" data-id="message-title">给宋寅潇的留言</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto editable" data-type="text" data-id="message-subtitle">在这里写下想对寅潇说的话，每一句都是爱的表达</p>
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <!-- 留言表单 -->
+                    <div class="bg-love-light rounded-xl p-6 md:p-8 shadow-md mb-12">
+                        <h3 class="font-romantic text-2xl text-love-primary mb-6 editable" data-type="text" data-id="message-form-title">写下你的心声</h3>
+                        <form id="message-form">
+                            <div class="mb-4">
+                                <label for="message-title" class="block text-gray-700 mb-2 editable" data-type="text" data-id="message-label-title">标题</label>
+                                <input type="text" id="message-title" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-love-primary focus:ring focus:ring-love-primary/20 outline-none transition-all" placeholder="给这条留言起个标题吧">
+                            </div>
+                            <div class="mb-6">
+                                <label for="message-content" class="block text-gray-700 mb-2 editable" data-type="text" data-id="message-label-content">内容</label>
+                                <textarea id="message-content" rows="5" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-love-primary focus:ring focus:ring-love-primary/20 outline-none transition-all" placeholder="亲爱的寅潇，我想对你说..."></textarea>
+                            </div>
+                            <button type="submit" class="bg-love-primary hover:bg-love-primary/90 text-white px-6 py-3 rounded-lg transition-all shadow-md hover:shadow-lg">
+                                发送留言
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- 留言列表 -->
+                    <div id="messages-list">
+                        <h3 class="font-romantic text-2xl text-love-primary mb-6 editable" data-type="text" data-id="message-list-title">过往留言</h3>
+                        
+                        <!-- 留言1 -->
+                        <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm mb-6 hover:shadow-md transition-shadow message-item" data-id="msg-1">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="text-xl font-semibold text-love-primary editable" data-type="text" data-id="msg-1-title">第一次见到你</h4>
+                                <span class="text-sm text-gray-500 editable" data-type="date" data-id="msg-1-date">2023年3月15日</span>
+                            </div>
+                            <p class="text-gray-700 editable" data-type="text" data-id="msg-1-content">亲爱的寅潇，第一次见到你的时候，我就被你的笑容深深吸引了。你的眼睛像星星一样明亮，每次看到你，我的心都会怦怦直跳。希望我们能一直这样幸福下去。</p>
+                            <button class="mt-2 text-sm text-red-500 hover:text-red-700 hidden edit-button delete-message">
+                                <i class="fa fa-trash mr-1"></i>删除
+                            </button>
+                        </div>
+                        
+                        <!-- 留言2 -->
+                        <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm mb-6 hover:shadow-md transition-shadow message-item" data-id="msg-2">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="text-xl font-semibold text-love-primary editable" data-type="text" data-id="msg-2-title">我们的旅行</h4>
+                                <span class="text-sm text-gray-500 editable" data-type="date" data-id="msg-2-date">2023年7月25日</span>
+                            </div>
+                            <p class="text-gray-700 editable" data-type="text" data-id="msg-2-content">寅潇，这次旅行真的太开心了！和你一起看日出，一起在海边散步，一起品尝当地的美食，这些都是我最珍贵的回忆。谢谢你带给我的快乐，我爱你！</p>
+                            <button class="mt-2 text-sm text-red-500 hover:text-red-700 hidden edit-button delete-message">
+                                <i class="fa fa-trash mr-1"></i>删除
+                            </button>
+                        </div>
+                        
+                        <!-- 留言3 -->
+                        <div class="bg-white border border-gray-100 rounded-xl p-6 shadow-sm mb-6 hover:shadow-md transition-shadow message-item" data-id="msg-3">
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="text-xl font-semibold text-love-primary editable" data-type="text" data-id="msg-3-title">未来的约定</h4>
+                                <span class="text-sm text-gray-500 editable" data-type="date" data-id="msg-3-date">2023年10月6日</span>
+                            </div>
+                            <p class="text-gray-700 editable" data-type="text" data-id="msg-3-content">亲爱的，祝你生日快乐！希望你每天都开开心心的。我们约定，以后每一个生日都一起过，一起去更多的地方，一起创造更多美好的回忆。永远爱你的人。</p>
+                            <button class="mt-2 text-sm text-red-500 hover:text-red-700 hidden edit-button delete-message">
+                                <i class="fa fa-trash mr-1"></i>删除
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-love-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <div class="font-romantic text-3xl mb-4 editable" data-type="text" data-id="footer-title">我爱宋寅潇</div>
+                <p class="text-love-secondary mb-6 editable" data-type="text" data-id="footer-subtitle">这份爱，将永远延续...</p>
+                <div class="flex justify-center space-x-4 mb-8">
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-love-primary transition-colors">
+                        <i class="fa fa-heart"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-love-primary transition-colors">
+                        <i class="fa fa-camera"></i>
+                    </a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-love-primary transition-colors">
+                        <i class="fa fa-book"></i>
+                    </a>
+                </div>
+                <p class="text-sm text-white/60 editable" data-type="text" data-id="footer-copyright">© 2023 我爱宋寅潇 - 永远爱你</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 模态框：添加/编辑回忆 -->
+    <div id="memory-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl max-w-md w-full mx-4 p-6 shadow-2xl transform transition-all">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-romantic text-2xl text-love-primary" id="memory-modal-title">添加新回忆</h3>
+                <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="memory-form">
+                <input type="hidden" id="memory-id">
+                <div class="mb-4">
+                    <label for="memory-title-input" class="block text-gray-700 mb-2">回忆标题</label>
+                    <input type="text" id="memory-title-input" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-love-primary focus:ring focus:ring-love-primary/20 outline-none" required="">
+                </div>
+                <div class="mb-4">
+                    <label for="memory-description-input" class="block text-gray-700 mb-2">回忆描述</label>
+                    <textarea id="memory-description-input" rows="3" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-love-primary focus:ring focus:ring-love-primary/20 outline-none" required=""></textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="memory-date-input" class="block text-gray-700 mb-2">日期</label>
+                    <input type="date" id="memory-date-input" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-love-primary focus:ring focus:ring-love-primary/20 outline-none" required="">
+                </div>
+                <div class="mb-6">
+                    <label for="memory-image-input" class="block text-gray-700 mb-2">上传照片</label>
+                    <input type="file" id="memory-image-input" accept="image/*" class="w-full">
+                </div>
+                <button type="submit" class="w-full bg-love-primary hover:bg-love-primary/90 text-white py-3 rounded-lg transition-colors">
+                    保存回忆
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 模态框：修改纪念日 -->
+    <div id="anniversary-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl max-w-md w-full mx-4 p-6 shadow-2xl transform transition-all">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-romantic text-2xl text-love-primary">修改纪念日</h3>
+                <button id="close-anniversary-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="anniversary-form">
+                <div class="mb-6">
+                    <label for="anniversary-date" class="block text-gray-700 mb-2">我们在一起的日子</label>
+                    <input type="date" id="anniversary-date" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-love-primary focus:ring focus:ring-love-primary/20 outline-none" required="">
+                </div>
+                <button type="submit" class="w-full bg-love-primary hover:bg-love-primary/90 text-white py-3 rounded-lg transition-colors">
+                    保存日期
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 模态框：编辑照片 -->
+    <div id="photo-edit-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-xl max-w-md w-full mx-4 p-6 shadow-2xl transform transition-all">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-romantic text-2xl text-love-primary">更换照片</h3>
+                <button id="close-photo-modal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fa fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="photo-edit-form">
+                <input type="hidden" id="photo-id">
+                <div class="mb-6">
+                    <label for="new-photo" class="block text-gray-700 mb-2">选择新照片</label>
+                    <input type="file" id="new-photo" accept="image/*" class="w-full" required="">
+                </div>
+                <button type="submit" class="w-full bg-love-primary hover:bg-love-primary/90 text-white py-3 rounded-lg transition-colors">
+                    更换照片
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 编辑模式状态
+            let editMode = false;
+            // 存储原始内容用于取消编辑
+            let originalContent = {};
+            
+            // 移动端菜单切换
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            menuToggle.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    // 关闭移动菜单（如果打开）
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // 导航栏滚动效果
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('nav');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('py-2', 'shadow');
+                    navbar.classList.remove('py-3');
+                } else {
+                    navbar.classList.add('py-3');
+                    navbar.classList.remove('py-2', 'shadow');
+                }
+            });
+            
+            // 日期计时器 - 初始设置为86天前
+            const today = new Date();
+            let startDate = new Date(today);
+            startDate.setDate(today.getDate() - 86);
+            startDate.setHours(0, 0, 0, 0);
+            
+            // 从本地存储加载数据
+            loadFromLocalStorage();
+            
+            function updateTimer() {
+                const now = new Date();
+                const diff = now - startDate;
+                
+                // 计算天、时、分、秒
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                // 更新DOM
+                document.getElementById('days').textContent = days;
+                document.getElementById('hours').textContent = hours;
+                document.getElementById('minutes').textContent = minutes;
+                document.getElementById('seconds').textContent = seconds;
+            }
+            
+            // 初始化计时器并每秒更新
+            updateTimer();
+            setInterval(updateTimer, 1000);
+            
+            // 图片上传功能
+            const imageUpload = document.getElementById('image-upload');
+            const uploadBtn = document.getElementById('upload-btn');
+            const uploadProgress = document.getElementById('upload-progress');
+            const progressBar = document.getElementById('progress-bar');
+            const photoGallery = document.getElementById('photo-gallery');
+            
+            // 当有文件被选择时启用上传按钮
+            imageUpload.addEventListener('change', function() {
+                uploadBtn.disabled = this.files.length === 0;
+            });
+            
+            // 上传按钮点击事件
+            uploadBtn.addEventListener('click', function() {
+                const files = imageUpload.files;
+                if (files.length === 0) return;
+                
+                // 显示进度条
+                uploadProgress.classList.remove('hidden');
+                progressBar.style.width = '0%';
+                
+                // 模拟上传进度
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 10;
+                    progressBar.style.width = progress + '%';
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        
+                        // 上传完成后添加图片到画廊
+                        for (let i = 0; i < files.length; i++) {
+                            const file = files[i];
+                            const reader = new FileReader();
+                            
+                            reader.onload = function(e) {
+                                // 生成唯一ID
+                                const photoId = 'photo-' + Date.now() + '-' + i;
+                                
+                                const photoDiv = document.createElement('div');
+                                photoDiv.className = 'relative group overflow-hidden rounded-lg shadow-md aspect-square gallery-photo';
+                                photoDiv.dataset.id = photoId;
+                                photoDiv.innerHTML = `
+                                    <img src="${e.target.result}" alt="上传的照片" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                    <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                        <button class="edit-photo-btn text-white p-2 hover:text-love-primary transition-colors mr-4 hidden edit-button">
+                                            <i class="fa fa-pencil text-xl"></i>
+                                        </button>
+                                        <button class="delete-photo text-white p-2 hover:text-love-primary transition-colors">
+                                            <i class="fa fa-trash text-xl"></i>
+                                        </button>
+                                    </div>
+                                `;
+                                photoGallery.prepend(photoDiv);
+                                
+                                // 添加删除功能
+                                photoDiv.querySelector('.delete-photo').addEventListener('click', function() {
+                                    photoDiv.remove();
+                                    savePhotosToLocalStorage();
+                                });
+                                
+                                // 添加编辑功能
+                                photoDiv.querySelector('.edit-photo-btn').addEventListener('click', function() {
+                                    openPhotoEditModal(photoId);
+                                });
+                                
+                                // 如果在编辑模式，显示编辑按钮
+                                if (editMode) {
+                                    photoDiv.querySelector('.edit-photo-btn').classList.remove('hidden');
+                                }
+                            };
+                            
+                            reader.readAsDataURL(file);
+                        }
+                        
+                        // 重置上传控件
+                        imageUpload.value = '';
+                        uploadBtn.disabled = true;
+                        
+                        // 1秒后隐藏进度条
+                        setTimeout(() => {
+                            uploadProgress.classList.add('hidden');
+                            progressBar.style.width = '0%';
+                            savePhotosToLocalStorage();
+                        }, 1000);
+                    }
+                }, 300);
+            });
+            
+            // 删除照片功能
+            document.querySelectorAll('.delete-photo').forEach(button => {
+                button.addEventListener('click', function() {
+                    const photoDiv = this.closest('.gallery-photo');
+                    photoDiv.remove();
+                    savePhotosToLocalStorage();
+                });
+            });
+            
+            // 编辑照片功能
+            document.querySelectorAll('.edit-photo-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const photoId = this.closest('.gallery-photo').dataset.id;
+                    openPhotoEditModal(photoId);
+                });
+            });
+            
+            // 打开照片编辑模态框
+            function openPhotoEditModal(photoId) {
+                document.getElementById('photo-id').value = photoId;
+                document.getElementById('photo-edit-modal').classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+            
+            // 关闭照片编辑模态框
+            document.getElementById('close-photo-modal').addEventListener('click', function() {
+                document.getElementById('photo-edit-modal').classList.add('hidden');
+                document.getElementById('photo-edit-form').reset();
+                document.body.style.overflow = '';
+            });
+            
+            // 提交照片编辑
+            document.getElementById('photo-edit-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const photoId = document.getElementById('photo-id').value;
+                const newPhoto = document.getElementById('new-photo').files[0];
+                
+                if (!newPhoto) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const photoDiv = document.querySelector(`.gallery-photo[data-id="${photoId}"]`);
+                    if (photoDiv) {
+                        photoDiv.querySelector('img').src = e.target.result;
+                        savePhotosToLocalStorage();
+                    }
+                    
+                    document.getElementById('photo-edit-modal').classList.add('hidden');
+                    document.getElementById('photo-edit-form').reset();
+                    document.body.style.overflow = '';
+                };
+                
+                reader.readAsDataURL(newPhoto);
+            });
+            
+            // 留言表单提交
+            const messageForm = document.getElementById('message-form');
+            const messagesList = document.getElementById('messages-list');
+            
+            messageForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const title = document.getElementById('message-title').value;
+                const content = document.getElementById('message-content').value;
+                
+                if (!title || !content) {
+                    alert('请填写标题和内容');
+                    return;
+                }
+                
+                // 获取当前日期
+                const now = new Date();
+                const dateString = now.toLocaleDateString('zh-CN', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                const dateInputFormat = now.toISOString().split('T')[0];
+                
+                // 生成唯一ID
+                const messageId = 'msg-' + Date.now();
+                
+                // 创建新留言元素
+                const newMessage = document.createElement('div');
+                newMessage.className = 'bg-white border border-gray-100 rounded-xl p-6 shadow-sm mb-6 hover:shadow-md transition-shadow message-item';
+                newMessage.dataset.id = messageId;
+                newMessage.innerHTML = `
+                    <div class="flex justify-between items-start mb-3">
+                        <h4 class="text-xl font-semibold text-love-primary editable" data-type="text" data-id="${messageId}-title">${title}</h4>
+                        <span class="text-sm text-gray-500 editable" data-type="date" data-id="${messageId}-date">${dateString}</span>
+                    </div>
+                    <p class="text-gray-700 editable" data-type="text" data-id="${messageId}-content">${content}</p>
+                    <button class="mt-2 text-sm text-red-500 hover:text-red-700 hidden edit-button delete-message">
+                        <i class="fa fa-trash mr-1"></i>删除
+                    </button>
+                `;
+                
+                // 存储原始内容
+                originalContent[`${messageId}-title`] = title;
+                originalContent[`${messageId}-content`] = content;
+                originalContent[`${messageId}-date`] = dateInputFormat;
+                
+                // 添加到留言列表顶部
+                const messagesHeading = messagesList.querySelector('h3');
+                messagesList.insertBefore(newMessage, messagesHeading.nextSibling);
+                
+                // 添加删除功能
+                newMessage.querySelector('.delete-message').addEventListener('click', function() {
+                    newMessage.remove();
+                    saveMessagesToLocalStorage();
+                });
+                
+                // 为新添加的元素添加编辑功能
+                attachEditFunctionality(newMessage.querySelectorAll('.editable'));
+                
+                // 如果在编辑模式，显示删除按钮
+                if (editMode) {
+                    newMessage.querySelector('.delete-message').classList.remove('hidden');
+                }
+                
+                // 重置表单
+                messageForm.reset();
+                
+                // 保存到本地存储
+                saveMessagesToLocalStorage();
+                
+                // 显示成功提示
+                alert('留言发送成功！');
+            });
+            
+            // 删除留言功能
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.delete-message')) {
+                    const messageItem = e.target.closest('.message-item');
+                    if (confirm('确定要删除这条留言吗？')) {
+                        messageItem.remove();
+                        saveMessagesToLocalStorage();
+                    }
+                }
+            });
+            
+            // 添加新回忆模态框
+            const addMemoryBtn = document.getElementById('add-memory');
+            const memoryModal = document.getElementById('memory-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const memoryForm = document.getElementById('memory-form');
+            const memoryModalTitle = document.getElementById('memory-modal-title');
+            const memoryIdInput = document.getElementById('memory-id');
+            
+            addMemoryBtn.addEventListener('click', function() {
+                memoryModalTitle.textContent = '添加新回忆';
+                memoryIdInput.value = '';
+                memoryForm.reset();
+                memoryModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            closeModalBtn.addEventListener('click', function() {
+                memoryModal.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+            
+            // 点击模态框外部关闭
+            memoryModal.addEventListener('click', function(e) {
+                if (e.target === memoryModal) {
+                    memoryModal.classList.add('hidden');
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // 提交新回忆或编辑回忆
+            memoryForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const memoryId = memoryIdInput.value || 'memory-' + Date.now();
+                const title = document.getElementById('memory-title-input').value;
+                const description = document.getElementById('memory-description-input').value;
+                const date = document.getElementById('memory-date-input').value;
+                const image = document.getElementById('memory-image-input').files[0];
+                
+                if (!title || !description || !date) {
+                    alert('请填写完整的回忆信息');
+                    return;
+                }
+                
+                // 格式化日期显示
+                const dateObj = new Date(date);
+                const formattedDate = dateObj.toLocaleDateString('zh-CN', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                // 处理图片
+                let imageSrc = 'https://picsum.photos/id/' + Math.floor(Math.random() * 100) + '/600/400';
+                
+                // 检查是否是编辑现有回忆
+                const existingMemory = document.querySelector(`.memory-card[data-id="${memoryId}"]`);
+                
+                if (existingMemory && !image) {
+                    // 如果是编辑且没有上传新图片，保留原有图片
+                    imageSrc = existingMemory.querySelector('img').src;
+                }
+                
+                // 创建新回忆元素或更新现有元素
+                let memoryDiv;
+                
+                if (existingMemory) {
+                    memoryDiv = existingMemory;
+                    memoryDiv.querySelector('h3').textContent = title;
+                    memoryDiv.querySelector('p').textContent = description;
+                    memoryDiv.querySelector('.text-gray-500').innerHTML = `<i class="fa fa-calendar-o mr-1"></i> ${formattedDate}`;
+                    
+                    // 更新原始内容存储
+                    originalContent[`${memoryId}-title`] = title;
+                    originalContent[`${memoryId}-desc`] = description;
+                    originalContent[`${memoryId}-date`] = date;
+                } else {
+                    memoryDiv = document.createElement('div');
+                    memoryDiv.className = 'bg-love-light rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1 memory-card';
+                    memoryDiv.dataset.id = memoryId;
+                    
+                    // 存储原始内容
+                    originalContent[`${memoryId}-title`] = title;
+                    originalContent[`${memoryId}-desc`] = description;
+                    originalContent[`${memoryId}-date`] = date;
+                    originalContent[`${memoryId}-image`] = imageSrc;
+                }
+                
+                // 如果有新图片，更新图片
+                if (image) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        memoryDiv.querySelector('img').src = e.target.result;
+                        if (!existingMemory) {
+                            completeMemoryCreation(memoryDiv, title, description, formattedDate, date, e.target.result);
+                        } else {
+                            originalContent[`${memoryId}-image`] = e.target.result;
+                            saveMemoriesToLocalStorage();
+                        }
+                    };
+                    reader.readAsDataURL(image);
+                } else if (!existingMemory) {
+                    completeMemoryCreation(memoryDiv, title, description, formattedDate, date, imageSrc);
+                }
+                
+                // 关闭模态框并重置表单
+                memoryModal.classList.add('hidden');
+                memoryForm.reset();
+                document.body.style.overflow = '';
+                
+                if (existingMemory) {
+                    alert('回忆更新成功！');
+                } else {
+                    alert('回忆添加成功！');
+                }
+            });
+            
+            // 完成回忆创建的辅助函数
+            function completeMemoryCreation(memoryDiv, title, description, formattedDate, date, imageSrc) {
+                memoryDiv.innerHTML = `
+                    <div class="h-56 overflow-hidden relative">
+                        <img src="${imageSrc}" alt="${title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110 memory-image">
+                        <button class="absolute top-2 right-2 bg-black/50 text-white p-1 rounded opacity-0 hover:opacity-100 transition-opacity edit-image hidden edit-button">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-romantic text-2xl text-love-primary mb-2 editable" data-type="text" data-id="${memoryDiv.dataset.id}-title">${title}</h3>
+                        <p class="text-gray-600 mb-3 editable" data-type="text" data-id="${memoryDiv.dataset.id}-desc">${description}</p>
+                        <div class="text-sm text-gray-500 editable" data-type="date" data-id="${memoryDiv.dataset.id}-date">
+                            <i class="fa fa-calendar-o mr-1"></i> ${formattedDate}
+                        </div>
+                        <button class="mt-2 text-sm text-red-500 hover:text-red-700 hidden edit-button delete-memory">
+                            <i class="fa fa-trash mr-1"></i>删除
+                        </button>
+                    </div>
+                `;
+                
+                // 添加到回忆列表
+                const memoriesGrid = document.getElementById('memories-container');
+                memoriesGrid.prepend(memoryDiv);
+                
+                // 添加删除功能
+                memoryDiv.querySelector('.delete-memory').addEventListener('click', function() {
+                    if (confirm('确定要删除这段回忆吗？')) {
+                        memoryDiv.remove();
+                        saveMemoriesToLocalStorage();
+                    }
+                });
+                
+                // 添加编辑图片功能
+                memoryDiv.querySelector('.edit-image').addEventListener('click', function() {
+                    const fileInput = document.createElement('input');
+                    fileInput.type = 'file';
+                    fileInput.accept = 'image/*';
+                    
+                    fileInput.addEventListener('change', function(e) {
+                        const file = e.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(event) {
+                                memoryDiv.querySelector('img').src = event.target.result;
+                                originalContent[`${memoryDiv.dataset.id}-image`] = event.target.result;
+                                saveMemoriesToLocalStorage();
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                    
+                    fileInput.click();
+                });
+                
+                // 为新添加的元素添加编辑功能
+                attachEditFunctionality(memoryDiv.querySelectorAll('.editable'));
+                
+                // 如果在编辑模式，显示编辑按钮
+                if (editMode) {
+                    memoryDiv.querySelector('.edit-image').classList.remove('hidden');
+                    memoryDiv.querySelector('.delete-memory').classList.remove('hidden');
+                }
+                
+                // 保存到本地存储
+                saveMemoriesToLocalStorage();
+            }
+            
+            // 删除回忆功能
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.delete-memory')) {
+                    const memoryCard = e.target.closest('.memory-card');
+                    if (confirm('确定要删除这段回忆吗？')) {
+                        memoryCard.remove();
+                        saveMemoriesToLocalStorage();
+                    }
+                }
+            });
+            
+            // 编辑纪念日
+            document.getElementById('edit-anniversary').addEventListener('click', function() {
+                // 格式化开始日期为input日期格式
+                const dateInputFormat = startDate.toISOString().split('T')[0];
+                document.getElementById('anniversary-date').value = dateInputFormat;
+                document.getElementById('anniversary-modal').classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // 关闭纪念日模态框
+            document.getElementById('close-anniversary-modal').addEventListener('click', function() {
+                document.getElementById('anniversary-modal').classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+            
+            // 提交纪念日修改
+            document.getElementById('anniversary-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const newDate = document.getElementById('anniversary-date').value;
+                if (newDate) {
+                    startDate = new Date(newDate);
+                    startDate.setHours(0, 0, 0, 0);
+                    updateTimer();
+                    
+                    // 保存到本地存储
+                    localStorage.setItem('anniversaryDate', newDate);
+                    
+                    document.getElementById('anniversary-modal').classList.add('hidden');
+                    document.body.style.overflow = '';
+                    alert('纪念日已更新！');
+                }
+            });
+            
+            // 编辑模式切换
+            const editToggle = document.getElementById('edit-toggle');
+            const editControls = document.getElementById('edit-controls');
+            const saveEditsBtn = document.getElementById('save-edits');
+            const cancelEditsBtn = document.getElementById('cancel-edits');
+            
+            editToggle.addEventListener('click', function() {
+                editMode = !editMode;
+                
+                if (editMode) {
+                    // 进入编辑模式
+                    editToggle.innerHTML = '<i class="fa fa-check mr-2"></i><span>退出编辑</span>';
+                    editControls.classList.remove('hidden');
+                    
+                    // 显示所有编辑按钮
+                    document.querySelectorAll('.edit-button').forEach(btn => {
+                        btn.classList.remove('hidden');
+                    });
+                    
+                    // 为可编辑元素添加样式和事件
+                    document.querySelectorAll('.editable').forEach(el => {
+                        el.classList.add('edit-mode');
+                        
+                        // 存储原始内容
+                        if (!originalContent[el.dataset.id]) {
+                            if (el.dataset.type === 'date') {
+                                // 对于日期类型，存储ISO格式
+                                const dateText = el.textContent.trim().replace(/^.*?(\d{4})年(\d{1,2})月(\d{1,2})日$/, '$1-$2-$3');
+                                originalContent[el.dataset.id] = dateText;
+                            } else {
+                                originalContent[el.dataset.id] = el.textContent;
+                            }
+                        }
+                    });
+                    
+                    // 为可编辑区块添加样式
+                    document.querySelectorAll('.editable-section').forEach(el => {
+                        el.classList.add('edit-mode', 'p-2', 'rounded-lg');
+                    });
+                } else {
+                    // 退出编辑模式
+                    editToggle.innerHTML = '<i class="fa fa-pencil mr-2"></i><span>编辑模式</span>';
+                    editControls.classList.add('hidden');
+                    
+                    // 隐藏所有编辑按钮
+                    document.querySelectorAll('.edit-button').forEach(btn => {
+                        btn.classList.add('hidden');
+                    });
+                    
+                    // 移除编辑样式
+                    document.querySelectorAll('.editable').forEach(el => {
+                        el.classList.remove('edit-mode');
+                    });
+                    
+                    document.querySelectorAll('.editable-section').forEach(el => {
+                        el.classList.remove('edit-mode', 'p-2', 'rounded-lg');
+                    });
+                }
+            });
+            
+            // 保存编辑
+            saveEditsBtn.addEventListener('click', function() {
+                // 保存文本内容到本地存储
+                const textContent = {};
+                document.querySelectorAll('.editable').forEach(el => {
+                    textContent[el.dataset.id] = el.textContent;
+                });
+                localStorage.setItem('siteTextContent', JSON.stringify(textContent));
+                
+                // 保存其他数据
+                saveMemoriesToLocalStorage();
+                saveMessagesToLocalStorage();
+                savePhotosToLocalStorage();
+                
+                alert('所有修改已保存！');
+            });
+            
+            // 取消编辑
+            cancelEditsBtn.addEventListener('click', function() {
+                if (confirm('确定要放弃所有修改吗？')) {
+                    // 恢复原始内容
+                    document.querySelectorAll('.editable').forEach(el => {
+                        if (originalContent[el.dataset.id]) {
+                            if (el.dataset.type === 'date') {
+                                // 恢复日期格式显示
+                                const dateParts = originalContent[el.dataset.id].split('-');
+                                if (dateParts.length === 3) {
+                                    el.innerHTML = `<i class="fa fa-calendar-o mr-1"></i> ${dateParts[0]}年${dateParts[1]}月${dateParts[2]}日`;
+                                }
+                            } else {
+                                el.textContent = originalContent[el.dataset.id];
+                            }
+                        }
+                    });
+                    
+                    // 退出编辑模式
+                    editMode = false;
+                    editToggle.innerHTML = '<i class="fa fa-pencil mr-2"></i><span>编辑模式</span>';
+                    editControls.classList.add('hidden');
+                    
+                    // 隐藏所有编辑按钮
+                    document.querySelectorAll('.edit-button').forEach(btn => {
+                        btn.classList.add('hidden');
+                    });
+                    
+                    // 移除编辑样式
+                    document.querySelectorAll('.editable').forEach(el => {
+                        el.classList.remove('edit-mode');
+                    });
+                    
+                    document.querySelectorAll('.editable-section').forEach(el => {
+                        el.classList.remove('edit-mode', 'p-2', 'rounded-lg');
+                    });
+                }
+            });
+            
+            // 为可编辑元素附加编辑功能
+            function attachEditFunctionality(elements) {
+                elements.forEach(el => {
+                    el.addEventListener('click', function() {
+                        if (!editMode) return;
+                        
+                        const elementId = this.dataset.id;
+                        const elementType = this.dataset.type || 'text';
+                        const currentValue = this.textContent;
+                        
+                        if (elementType === 'date') {
+                            // 处理日期编辑
+                            // 提取日期部分
+                            const dateText = currentValue.trim().replace(/^.*?(\d{4})年(\d{1,2})月(\d{1,2})日$/, '$1-$2-$3');
+                            
+                            const input = document.createElement('input');
+                            input.type = 'date';
+                            input.value = dateText;
+                            input.className = 'p-2 border rounded';
+                            
+                            const originalHTML = this.innerHTML;
+                            this.innerHTML = '';
+                            this.appendChild(input);
+                            
+                            input.focus();
+                            
+                            input.addEventListener('blur', function() {
+                                if (this.value) {
+                                    const dateParts = this.value.split('-');
+                                    originalContent[elementId] = this.value;
+                                    el.innerHTML = `<i class="fa fa-calendar-o mr-1"></i> ${dateParts[0]}年${dateParts[1]}月${dateParts[2]}日`;
+                                } else {
+                                    el.innerHTML = originalHTML;
+                                }
+                            });
+                            
+                            input.addEventListener('keypress', function(e) {
+                                if (e.key === 'Enter') {
+                                    input.blur();
+                                }
+                            });
+                        } else {
+                            // 处理文本编辑
+                            const input = document.createElement('input');
+                            input.type = 'text';
+                            input.value = currentValue;
+                            input.className = 'p-2 border rounded w-full';
+                            
+                            const originalText = this.textContent;
+                            this.textContent = '';
+                            this.appendChild(input);
+                            
+                            input.focus();
+                            
+                            input.addEventListener('blur', function() {
+                                if (this.value) {
+                                    originalContent[elementId] = this.value;
+                                    el.textContent = this.value;
+                                } else {
+                                    el.textContent = originalText;
+                                }
+                            });
+                            
+                            input.addEventListener('keypress', function(e) {
+                                if (e.key === 'Enter') {
+                                    input.blur();
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+            
+            // 为现有可编辑元素附加编辑功能
+            attachEditFunctionality(document.querySelectorAll('.editable'));
+            
+            // 保存回忆到本地存储
+            function saveMemoriesToLocalStorage() {
+                const memories = [];
+                
+                document.querySelectorAll('.memory-card').forEach(card => {
+                    const memoryId = card.dataset.id;
+                    const title = card.querySelector(`[data-id="${memoryId}-title"]`).textContent;
+                    const desc = card.querySelector(`[data-id="${memoryId}-desc"]`).textContent;
+                    const dateText = card.querySelector(`[data-id="${memoryId}-date"]`).textContent;
+                    const date = dateText.trim().replace(/^.*?(\d{4})年(\d{1,2})月(\d{1,2})日$/, '$1-$2-$3');
+                    const image = card.querySelector('img').src;
+                    
+                    memories.push({
+                        id: memoryId,
+                        title: title,
+                        description: desc,
+                        date: date,
+                        image: image
+                    });
+                });
+                
+                localStorage.setItem('memories', JSON.stringify(memories));
+            }
+            
+            // 保存留言到本地存储
+            function saveMessagesToLocalStorage() {
+                const messages = [];
+                
+                document.querySelectorAll('.message-item').forEach(item => {
+                    const msgId = item.dataset.id;
+                    const title = item.querySelector(`[data-id="${msgId}-title"]`).textContent;
+                    const content = item.querySelector(`[data-id="${msgId}-content"]`).textContent;
+                    const dateText = item.querySelector(`[data-id="${msgId}-date"]`).textContent;
+                    const date = dateText.trim().replace(/^.*?(\d{4})年(\d{1,2})月(\d{1,2})日$/, '$1-$2-$3');
+                    
+                    messages.push({
+                        id: msgId,
+                        title: title,
+                        content: content,
+                        date: date
+                    });
+                });
+                
+                localStorage.setItem('messages', JSON.stringify(messages));
+            }
+            
+            // 保存照片到本地存储
+            function savePhotosToLocalStorage() {
+                const photos = [];
+                
+                document.querySelectorAll('.gallery-photo').forEach(photo => {
+                    const photoId = photo.dataset.id;
+                    const src = photo.querySelector('img').src;
+                    const alt = photo.querySelector('img').alt;
+                    
+                    photos.push({
+                        id: photoId,
+                        src: src,
+                        alt: alt
+                    });
+                });
+                
+                localStorage.setItem('photos', JSON.stringify(photos));
+            }
+            
+            // 从本地存储加载数据
+            function loadFromLocalStorage() {
+                // 加载纪念日
+                const savedAnniversary = localStorage.getItem('anniversaryDate');
+                if (savedAnniversary) {
+                    startDate = new Date(savedAnniversary);
+                    startDate.setHours(0, 0, 0, 0);
+                }
+                
+                // 加载文本内容
+                const savedTextContent = localStorage.getItem('siteTextContent');
+                if (savedTextContent) {
+                    const textContent = JSON.parse(savedTextContent);
+                    Object.keys(textContent).forEach(key => {
+                        const element = document.querySelector(`[data-id="${key}"]`);
+                        if (element) {
+                            if (element.dataset.type === 'date') {
+                                // 日期格式处理
+                                const dateParts = textContent[key].split('-');
+                                if (dateParts.length === 3) {
+                                    element.innerHTML = `<i class="fa fa-calendar-o mr-1"></i> ${dateParts[0]}年${dateParts[1]}月${dateParts[2]}日`;
+                                }
+                            } else {
+                                element.textContent = textContent[key];
+                            }
+                            originalContent[key] = textContent[key];
+                        }
+                    });
+                }
+                
+                // 加载回忆
+                const savedMemories = localStorage.getItem('memories');
+                if (savedMemories) {
+                    const memories = JSON.parse(savedMemories);
+                    const memoriesContainer = document.getElementById('memories-container');
+                    
+                    // 清空现有回忆（保留示例的话可以注释掉）
+                    memoriesContainer.innerHTML = '';
+                    
+                    memories.forEach(memory => {
+                        const dateObj = new Date(memory.date);
+                        const formattedDate = dateObj.toLocaleDateString('zh-CN', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+                        
+                        const memoryDiv = document.createElement('div');
+                        memoryDiv.className = 'bg-love-light rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1 memory-card';
+                        memoryDiv.dataset.id = memory.id;
+                        
+                        memoryDiv.innerHTML = `
+                            <div class="h-56 overflow-hidden relative">
+                                <img src="${memory.image}" alt="${memory.title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110 memory-image">
+                                <button class="absolute top-2 right-2 bg-black/50 text-white p-1 rounded opacity-0 hover:opacity-100 transition-opacity edit-image hidden edit-button">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="font-romantic text-2xl text-love-primary mb-2 editable" data-type="text" data-id="${memory.id}-title">${memory.title}</h3>
+                                <p class="text-gray-600 mb-3 editable" data-type="text" data-id="${memory.id}-desc">${memory.description}</p>
+                                <div class="text-sm text-gray-500 editable" data-type="date" data-id="${memory.id}-date">
+                                    <i class="fa fa-calendar-o mr-1"></i> ${formattedDate}
+                                </div>
+                                <button class="mt-2 text-sm text-red-500 hover:text-red-700 hidden edit-button delete-memory">
+                                    <i class="fa fa-trash mr-1"></i>删除
+                                </button>
+                            </div>
+                        `;
+                        
+                        memoriesContainer.appendChild(memoryDiv);
+                        
+                        // 添加删除功能
+                        memoryDiv.querySelector('.delete-memory').addEventListener('click', function() {
+                            if (confirm('确定要删除这段回忆吗？')) {
+                                memoryDiv.remove();
+                                saveMemoriesToLocalStorage();
+                            }
+                        });
+                        
+                        // 添加编辑图片功能
+                        memoryDiv.querySelector('.edit-image').addEventListener('click', function() {
+                            const fileInput = document.createElement('input');
+                            fileInput.type = 'file';
+                            fileInput.accept = 'image/*';
+                            
+                            fileInput.addEventListener('change', function(e) {
+                                const file = e.target.files[0];
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onload = function(event) {
+                                        memoryDiv.querySelector('img').src = event.target.result;
+                                        saveMemoriesToLocalStorage();
+                                    };
+                                    reader.readAsDataURL(file);
+                                }
+                            });
+                            
+                            fileInput.click();
+                        });
+                        
+                        // 存储原始内容
+                        originalContent[`${memory.id}-title`] = memory.title;
+                        originalContent[`${memory.id}-desc`] = memory.description;
+                        originalContent[`${memory.id}-date`] = memory.date;
+                        originalContent[`${memory.id}-image`] = memory.image;
+                    });
+                    
+                    // 为加载的元素添加编辑功能
+                    attachEditFunctionality(document.querySelectorAll('.editable'));
+                }
+                
+                // 加载留言
+                const savedMessages = localStorage.getItem('messages');
+                if (savedMessages) {
+                    const messages = JSON.parse(savedMessages);
+                    const messagesList = document.getElementById('messages-list');
+                    const messagesHeading = messagesList.querySelector('h3');
+                    
+                    // 清空现有留言（保留示例的话可以注释掉）
+                    document.querySelectorAll('.message-item').forEach(item => item.remove());
+                    
+                    messages.forEach(message => {
+                        const dateObj = new Date(message.date);
+                        const formattedDate = dateObj.toLocaleDateString('zh-CN', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+                        
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = 'bg-white border border-gray-100 rounded-xl p-6 shadow-sm mb-6 hover:shadow-md transition-shadow message-item';
+                        messageDiv.dataset.id = message.id;
+                        
+                        messageDiv.innerHTML = `
+                            <div class="flex justify-between items-start mb-3">
+                                <h4 class="text-xl font-semibold text-love-primary editable" data-type="text" data-id="${message.id}-title">${message.title}</h4>
+                                <span class="text-sm text-gray-500 editable" data-type="date" data-id="${message.id}-date">${formattedDate}</span>
+                            </div>
+                            <p class="text-gray-700 editable" data-type="text" data-id="${message.id}-content">${message.content}</p>
+                            <button class="mt-2 text-sm text-red-500 hover:text-red-700 hidden edit-button delete-message">
+                                <i class="fa fa-trash mr-1"></i>删除
+                            </button>
+                        `;
+                        
+                        messagesList.insertBefore(messageDiv, messagesHeading.nextSibling);
+                        
+                        // 添加删除功能
+                        messageDiv.querySelector('.delete-message').addEventListener('click', function() {
+                            if (confirm('确定要删除这条留言吗？')) {
+                                messageDiv.remove();
+                                saveMessagesToLocalStorage();
+                            }
+                        });
+                        
+                        // 存储原始内容
+                        originalContent[`${message.id}-title`] = message.title;
+                        originalContent[`${message.id}-content`] = message.content;
+                        originalContent[`${message.id}-date`] = message.date;
+                    });
+                    
+                    // 为加载的元素添加编辑功能
+                    attachEditFunctionality(document.querySelectorAll('.editable'));
+                }
+                
+                // 加载照片
+                const savedPhotos = localStorage.getItem('photos');
+                if (savedPhotos) {
+                    const photos = JSON.parse(savedPhotos);
+                    const photoGallery = document.getElementById('photo-gallery');
+                    
+                    // 清空现有照片（保留示例的话可以注释掉）
+                    photoGallery.innerHTML = '';
+                    
+                    photos.forEach(photo => {
+                        const photoDiv = document.createElement('div');
+                        photoDiv.className = 'relative group overflow-hidden rounded-lg shadow-md aspect-square gallery-photo';
+                        photoDiv.dataset.id = photo.id;
+                        
+                        photoDiv.innerHTML = `
+                            <img src="${photo.src}" alt="${photo.alt}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <button class="edit-photo-btn text-white p-2 hover:text-love-primary transition-colors mr-4 hidden edit-button">
+                                    <i class="fa fa-pencil text-xl"></i>
+                                </button>
+                                <button class="delete-photo text-white p-2 hover:text-love-primary transition-colors">
+                                    <i class="fa fa-trash text-xl"></i>
+                                </button>
+                            </div>
+                        `;
+                        
+                        photoGallery.appendChild(photoDiv);
+                        
+                        // 添加删除功能
+                        photoDiv.querySelector('.delete-photo').addEventListener('click', function() {
+                            photoDiv.remove();
+                            savePhotosToLocalStorage();
+                        });
+                        
+                        // 添加编辑功能
+                        photoDiv.querySelector('.edit-photo-btn').addEventListener('click', function() {
+                            openPhotoEditModal(photo.id);
+                        });
+                    });
+                }
+            }
+            
+            // 初始化动画元素
+            const animateOnScroll = function() {
+                const elements = document.querySelectorAll('.bg-love-light.rounded-xl');
+                elements.forEach(element => {
+                    const position = element.getBoundingClientRect();
+                    // 如果元素进入视口
+                    if(position.top < window.innerHeight && position.bottom >= 0) {
+                        element.classList.add('slide-up');
+                    }
+                });
+            };
+            
+            // 初始检查和滚动时检查
+            animateOnScroll();
+            window.addEventListener('scroll', animateOnScroll);
+        });
+    </script>
+</body>
+</html>
+    
